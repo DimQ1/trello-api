@@ -1,0 +1,23 @@
+[
+    {
+        "id": 1,
+        "name": "best app",
+        "color": "red",
+        "description": "My best applications",
+        "created": "2019-06-12T12:25:31.417Z"
+    },
+    {
+        "id": 2,
+        "name": "old app",
+        "color": "blue",
+        "description": "old application",
+        "created": "2019-06-12T12:25:31.417Z"
+    },
+    {
+        "id": 3,
+        "name": "garbage",
+        "color": "black",
+        "description": "non-working applications",
+        "created": "2019-06-12T12:25:31.417Z"
+    }
+]

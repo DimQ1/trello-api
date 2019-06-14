@@ -37,6 +37,7 @@ You need to build REST API which allows you to do simple CRUD operations with ro
     - status(enum)
     - due date
     - labels([string])
+    
 
 2. Use [helmetjs](https://helmetjs.github.io/) for secure reasons.
 
