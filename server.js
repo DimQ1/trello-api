@@ -6,6 +6,7 @@ const errorHandler = require('./helpers/errorHandler');
 const { secret } = require('./config.json');
 const users = require('./users');
 const board = require('./board');
+const card = require('./card');
 
 const app = express();
 
@@ -17,6 +18,7 @@ app.use(jwt({ secret })
 // api routes
 app.use('/api/users', users.controller);
 app.use('/api/board', board.controller);
+app.use('/api/card', card.controller);
 
 // global error handler
 app.use(errorHandler);

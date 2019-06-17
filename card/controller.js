@@ -1,30 +1,30 @@
 const express = require('express');
 
 const router = express.Router();
-const BoardService = require('./BoardService.js');
+const CardService = require('./CardService');
 const role = require('../helpers/role');
 const Authorize = require('../helpers/Authorize');
 
 const authorize = new Authorize();
 
-const service = new BoardService();
+const service = new CardService();
 
 async function create(req, res, next) {
-    res.send(JSON.stringify(await service.create(req.body.board)));
+    res.send(JSON.stringify(await service.create(req.body.card)));
 }
 function findAll(req, res, next) {
     res.send(service.findAll());
 }
 function findOne(req, res, next) {
-    res.send(service.findOne(req.params.boardId));
+    res.send(service.findOne(req.params.cardId));
 }
 
 async function findByIdAndUpdate(req, res, next) {
-    res.send({ updated: await service.findByIdAndUpdate(req.body.board) });
+    res.send({ updated: await service.findByIdAndUpdate(req.body.card) });
 }
 
 async function deleteById(req, res, next) {
-    res.send({ deleted: await service.deleteById(req.params.boardId) });
+    res.send({ deleted: await service.deleteById(req.params.cardId) });
 }
 
 // Create a new board
@@ -34,11 +34,11 @@ router.post('/', authorize.userRoleCheck(role.admin), create);
 router.get('/', findAll);
 
 // Retrieve a single board with boardId
-router.get('/:boardId', findOne);
+router.get('/:cardId', findOne);
 
 // Update a board with boardId
 router.put('/', authorize.userRoleCheck(role.admin), findByIdAndUpdate);
 
 // Delete a board with boardId
-router.delete('/:boardId', authorize.userRoleCheck(role.admin), deleteById);
+router.delete('/:cardId', authorize.userRoleCheck(role.admin), deleteById);
 module.exports = router;

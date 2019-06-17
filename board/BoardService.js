@@ -1,6 +1,7 @@
 const fs = require('fs');
 const path = require('path');
 const boards = require('../assets/boards');
+const cards = require('../assets/cards');
 
 module.exports = class BoardService {
     constructor() {
@@ -22,17 +23,48 @@ module.exports = class BoardService {
     async create(board) {
         board.id = this._getNextId();
         boards.push(board);
-        await this._sveBoards();
+        await this._sveBoards()
+            .catch((error) => { throw error; });
 
         return board;
     }
 
-    findByIdAndUpdate(board) {
+    async findByIdAndUpdate(board) {
+        const isUpdated = !boards.every((itemBoard, index, arrayBoards) => {
+            if (itemBoard.id === +board.id) {
+                arrayBoards.splice(index, 1, board);
 
+                return false;
+            }
+
+            return true;
+        });
+
+        if (isUpdated) {
+            await this._sveBoards()
+                .catch((error) => { throw error; });
+        }
+
+        return isUpdated;
     }
 
-    deleteById(id) {
+    async deleteById(id) {
+        const isUpdated = !boards.every((board, index, arrayBoards) => {
+            if (board.id === +id) {
+                arrayBoards.splice(index, 1);
 
+                return false;
+            }
+
+            return true;
+        });
+
+        if (isUpdated) {
+            await this._sveBoards()
+                .catch((error) => { throw error; });
+        }
+
+        return isUpdated;
     }
 
     findAll() {
