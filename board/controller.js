@@ -9,8 +9,8 @@ const authorize = new Authorize();
 
 const service = new BoardService();
 
-function create(req, res, next) {
-    service.create(req.params.board);
+async function create(req, res, next) {
+    res.send(JSON.stringify(await service.create(req.body.board)));
 }
 function findAll(req, res, next) {
     res.send(service.findAll());
