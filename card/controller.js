@@ -10,21 +10,42 @@ const authorize = new Authorize();
 const service = new CardService();
 
 async function create(req, res, next) {
-    res.send(JSON.stringify(await service.create(req.body.card)));
+    try {
+        res.send(JSON.stringify(await service.create(req.body.card)));
+    } catch (error) {
+        next(error);
+    }
 }
 function findAll(req, res, next) {
-    res.send(service.findAll());
+    try {
+        res.send(service.findAll());
+    } catch (error) {
+        next(error);
+    }
 }
 function findOne(req, res, next) {
-    res.send(service.findOne(req.params.cardId));
+    try {
+        res.send(service.findOne(req.params.cardId));
+    } catch (error) {
+        next(error);
+    }
 }
 
 async function findByIdAndUpdate(req, res, next) {
-    res.send({ updated: await service.findByIdAndUpdate(req.body.card) });
+    try {
+        res.send({ updated: await service.findByIdAndUpdate(req.body.card) });
+    } catch (error) {
+        next(error);
+    }
 }
 
 async function deleteById(req, res, next) {
-    res.send({ deleted: await service.deleteById(req.params.cardId) });
+    try {
+        res.send({ deleted: await service.deleteById(req.params.cardId) });
+    } catch (error) {
+        next(error);
+    }
+
 }
 
 // Create a new board
