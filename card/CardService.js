@@ -40,8 +40,7 @@ module.exports = class CardService {
         });
 
         if (isUpdated) {
-            await this._sveCards()
-                .catch((error) => { throw error; });
+            await this._sveCards();
         }
 
         return isUpdated;
@@ -59,8 +58,7 @@ module.exports = class CardService {
         });
 
         if (isDeleted) {
-            await this._sveCards()
-                .catch((error) => { throw error; });
+            await this._sveCards();
         }
 
         return isDeleted;

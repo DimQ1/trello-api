@@ -23,8 +23,7 @@ module.exports = class BoardService {
     async create(board) {
         board.id = this._getNextId();
         boards.push(board);
-        await this._sveBoards()
-            .catch((error) => { throw error; });
+        await this._sveBoards();
 
         return board;
     }
@@ -41,8 +40,7 @@ module.exports = class BoardService {
         });
 
         if (isUpdated) {
-            await this._sveBoards()
-                .catch((error) => { throw error; });
+            await this._sveBoards();
         }
 
         return isUpdated;
@@ -60,8 +58,7 @@ module.exports = class BoardService {
         });
 
         if (isUpdated) {
-            await this._sveBoards()
-                .catch((error) => { throw error; });
+            await this._sveBoards();
         }
 
         return isUpdated;
