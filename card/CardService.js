@@ -21,6 +21,7 @@ module.exports = class CardService {
 
     async create(card) {
         card.id = this._getNextId();
+        card.created = new Date();
         cards.push(card);
         await this._sveCards()
             .catch((error) => { throw error; });

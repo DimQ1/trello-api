@@ -22,6 +22,7 @@ module.exports = class BoardService {
 
     async create(board) {
         board.id = this._getNextId();
+        board.created = new Date();
         boards.push(board);
         await this._sveBoards();
 

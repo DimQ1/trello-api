@@ -1,9 +1,12 @@
 const express = require('express');
 
 const router = express.Router();
+const expressJoiValidator = require('express-joi-validator');
+
 const CardService = require('./CardService');
 const role = require('../helpers/role');
 const Authorize = require('../helpers/Authorize');
+const validators = require('./validators');
 
 const authorize = new Authorize();
 
@@ -47,18 +50,18 @@ async function deleteById(req, res, next) {
     }
 }
 
-// Create a new board
-router.post('/', authorize.userRoleCheck(role.admin), create);
+// Create a new card
+router.post('/', expressJoiValidator(validators.create), authorize.userRoleCheck(role.admin), create);
 
-// Retrieve all boards
+// Retrieve all cards
 router.get('/', findAll);
 
-// Retrieve a single board with boardId
+// Retrieve a single card with cardId
 router.get('/:cardId', findOne);
 
-// Update a board with boardId
-router.put('/', authorize.userRoleCheck(role.admin), findByIdAndUpdate);
+// Update a card with cardId
+router.put('/', expressJoiValidator(validators.update), authorize.userRoleCheck(role.admin), findByIdAndUpdate);
 
-// Delete a board with boardId
+// Delete a card with cardId
 router.delete('/:cardId', authorize.userRoleCheck(role.admin), deleteById);
 module.exports = router;

@@ -1,6 +1,8 @@
 const express = require('express');
 
 const router = express.Router();
+const expressJoiValidator = require('express-joi-validator');
+const validators = require('./validators');
 const BoardService = require('./BoardService.js');
 const role = require('../helpers/role');
 const Authorize = require('../helpers/Authorize');
@@ -11,7 +13,7 @@ const service = new BoardService();
 
 async function create(req, res, next) {
     try {
-        res.json(JSON.stringify(await service.create(req.body.board)));
+        res.json(await service.create(req.body.board));
     } catch (error) {
         next(error);
     }
@@ -48,7 +50,7 @@ async function deleteById(req, res, next) {
 }
 
 // Create a new board
-router.post('/', authorize.userRoleCheck(role.admin), create);
+router.post('/', expressJoiValidator(validators.create), authorize.userRoleCheck(role.admin), create);
 
 // Retrieve all boards
 router.get('/', findAll);
@@ -57,7 +59,7 @@ router.get('/', findAll);
 router.get('/:boardId', findOne);
 
 // Update a board with boardId
-router.put('/', authorize.userRoleCheck(role.admin), findByIdAndUpdate);
+router.put('/', expressJoiValidator(validators.update), authorize.userRoleCheck(role.admin), findByIdAndUpdate);
 
 // Delete a board with boardId
 router.delete('/:boardId', authorize.userRoleCheck(role.admin), deleteById);
