@@ -1,5 +1,6 @@
 /* eslint-disable no-console */
 const express = require('express');
+const helmet = require('helmet');
 const bodyParser = require('body-parser');
 const jwt = require('express-jwt');
 const errorHandler = require('./helpers/errorHandler');
@@ -10,6 +11,7 @@ const card = require('./card');
 
 const app = express();
 
+app.use(helmet());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(jwt({ secret })
