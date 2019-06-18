@@ -11,21 +11,21 @@ const service = new CardService();
 
 async function create(req, res, next) {
     try {
-        res.send(JSON.stringify(await service.create(req.body.card)));
+        res.json(await service.create(req.body.card));
     } catch (error) {
         next(error);
     }
 }
 function findAll(req, res, next) {
     try {
-        res.send(service.findAll());
+        res.json(service.findAll());
     } catch (error) {
         next(error);
     }
 }
 function findOne(req, res, next) {
     try {
-        res.send(service.findOne(req.params.cardId));
+        res.json(service.findOne(req.params.cardId));
     } catch (error) {
         next(error);
     }
@@ -33,7 +33,7 @@ function findOne(req, res, next) {
 
 async function findByIdAndUpdate(req, res, next) {
     try {
-        res.send({ updated: await service.findByIdAndUpdate(req.body.card) });
+        res.json({ updated: await service.findByIdAndUpdate(req.body.card) });
     } catch (error) {
         next(error);
     }
@@ -41,7 +41,7 @@ async function findByIdAndUpdate(req, res, next) {
 
 async function deleteById(req, res, next) {
     try {
-        res.send({ deleted: await service.deleteById(req.params.cardId) });
+        res.json({ deleted: await service.deleteById(req.params.cardId) });
     } catch (error) {
         next(error);
     }

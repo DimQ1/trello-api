@@ -11,21 +11,21 @@ const service = new BoardService();
 
 async function create(req, res, next) {
     try {
-        res.send(JSON.stringify(await service.create(req.body.board)));
+        res.json(JSON.stringify(await service.create(req.body.board)));
     } catch (error) {
         next(error);
     }
 }
 function findAll(req, res, next) {
     try {
-        res.send(service.findAll());
+        res.json(service.findAll());
     } catch (error) {
         next(error);
     }
 }
 function findOne(req, res, next) {
     try {
-        res.send(service.findOne(req.params.boardId));
+        res.json(service.findOne(req.params.boardId));
     } catch (error) {
         next(error);
     }
@@ -33,7 +33,7 @@ function findOne(req, res, next) {
 
 async function findByIdAndUpdate(req, res, next) {
     try {
-        res.send({ updated: await service.findByIdAndUpdate(req.body.board) });
+        res.json({ updated: await service.findByIdAndUpdate(req.body.board) });
     } catch (error) {
         next(error);
     }
@@ -41,7 +41,7 @@ async function findByIdAndUpdate(req, res, next) {
 
 async function deleteById(req, res, next) {
     try {
-        res.send({ deleted: await service.deleteById(req.params.boardId) });
+        res.json({ deleted: await service.deleteById(req.params.boardId) });
     } catch (error) {
         next(error);
     }
