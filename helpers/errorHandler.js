@@ -1,4 +1,8 @@
+const winstonLogger = require('../helpers/winstonLogger')();
+
 module.exports = (err, req, res, next) => {
+    winstonLogger.error(err.message);
+
     if (typeof (err) === 'string') {
         // custom application error
         return res.status(400)

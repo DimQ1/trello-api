@@ -1,3 +1,5 @@
+const winstonLogger = require('../helpers/winstonLogger')();
+
 module.exports = (request, response, next) => {
     const now = new Date();
     const hour = now.getHours();
@@ -5,6 +7,6 @@ module.exports = (request, response, next) => {
     const seconds = now.getSeconds();
     const data = `${hour}:${minutes}:${seconds} ${request.method} ${request.url} ${request.get('user-agent')}`;
     // eslint-disable-next-line no-console
-    console.log(data);
+    winstonLogger.info(data);
     next();
 };

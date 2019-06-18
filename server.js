@@ -5,6 +5,7 @@ const bodyParser = require('body-parser');
 const jwt = require('express-jwt');
 const errorHandler = require('./helpers/errorHandler');
 const consoleLogger = require('./helpers/consoleLogger');
+const winstonLogger = require('./helpers/winstonLogger')();
 const { secret } = require('./config.json');
 const users = require('./users');
 const board = require('./board');
@@ -32,5 +33,5 @@ app.use(errorHandler);
 // start server
 const port = process.env.NODE_ENV === 'production' ? 80 : 3000;
 app.listen(port, () => {
-    console.log(`Server listening on port ${port}`);
+    winstonLogger.info(`Server listening on port ${port}`);
 });
