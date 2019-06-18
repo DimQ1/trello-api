@@ -1,4 +1,4 @@
-const winstonLogger = require('../helpers/winstonLogger')();
+const winstonLogger = require('../logs/winstonLogger')();
 
 module.exports = (err, req, res, next) => {
     winstonLogger.error(err.message);

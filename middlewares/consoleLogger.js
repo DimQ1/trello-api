@@ -1,4 +1,4 @@
-const winstonLogger = require('../helpers/winstonLogger')();
+const winstonLogger = require('../logs/winstonLogger')();
 
 module.exports = (request, response, next) => {
     const now = new Date();
