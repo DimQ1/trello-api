@@ -45,7 +45,6 @@ async function deleteById(req, res, next) {
     } catch (error) {
         next(error);
     }
-
 }
 
 // Create a new board
