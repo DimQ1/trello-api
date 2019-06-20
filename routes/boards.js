@@ -7,9 +7,9 @@ const role = require('../helpers/role');
 const authorize = require('../businessLayer/authorize');
 const { boardsController } = require('../controllers/index');
 
-router.post('/', expressJoiValidator(validators.create), authorize.userRoleCheck(role.admin), boardsController.create);
+router.post('/', authorize.userRoleCheck(role.admin), expressJoiValidator(validators.create), boardsController.create);
 router.get('/', boardsController.getAll);
 router.get('/:boardId', boardsController.findOne);
-router.put('/', expressJoiValidator(validators.update), authorize.userRoleCheck(role.admin), boardsController.findByIdAndUpdate);
+router.put('/', authorize.userRoleCheck(role.admin), expressJoiValidator(validators.update), boardsController.findByIdAndUpdate);
 router.delete('/:boardId', authorize.userRoleCheck(role.admin), boardsController.deleteById);
 module.exports = router;
