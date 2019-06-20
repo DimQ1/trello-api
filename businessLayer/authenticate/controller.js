@@ -1,8 +1,8 @@
 const service = require('./service');
 
 class LoginController {
-    authenticate(req, res, next) {
-        const user = service.authenticate(req.body);
+    async authenticate(req, res, next) {
+        const user = await service.authenticate(req.body);
         if (user) {
             return res.json(user);
         }

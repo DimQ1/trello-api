@@ -14,13 +14,14 @@ class Authenticate {
         } : null;
     }
 
-    authenticate({ username, password }) {
-        const user = users.getByName(username);
+    async authenticate({ username, password }) {
+        const user = await users.getByName(username);
         const isPasswordCorrect = bcrypt.compareSync(password, user.password);
         if (isPasswordCorrect) {
             const token = jwt.sign({ sub: user.id, role: user.role }, config.secret);
+            const userWithoutPassword = this._getUserWithoutPassword(user);
 
-            return { ...this._getUserWithoutPassword(user), token };
+            return { ...userWithoutPassword, token };
         }
 
         return null;

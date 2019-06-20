@@ -23,7 +23,14 @@ class UserRepository {
     }
 
     getByName(userName) {
-        return users.find(userItem => userItem.username === userName);
+        return new Promise((resolve, reject) => {
+            try {
+                const user = users.find(userItem => userItem.username === userName);
+                resolve(user);
+            } catch (error) {
+                reject(error);
+            }
+        });
     }
 }
 
