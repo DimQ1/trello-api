@@ -1,4 +1,4 @@
-module.exports = class Authorize {
+class Authorize {
     userRoleCheck(roles = []) {
         return function (req, res, next) {
             if (roles.length && !roles.includes(req.user.role)) {
@@ -11,4 +11,6 @@ module.exports = class Authorize {
             return next();
         };
     }
-};
+}
+
+module.exports = new Authorize();

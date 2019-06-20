@@ -1,15 +1,10 @@
-const winstonLogger = require('../logs/winstonLogger')();
+const expressJwt = require('express-jwt');
+const logger = require('../logs/logger');
 
 module.exports = (err, req, res, next) => {
-    winstonLogger.error(err.message);
+    logger.error(err.message);
 
-    if (typeof (err) === 'string') {
-        // custom application error
-        return res.status(400)
-            .json({ message: err });
-    }
-
-    if (err.name === 'UnauthorizedError') {
+    if (err instanceof expressJwt.UnauthorizedError) {
         // jwt authentication error
         return res.status(401)
             .json({ message: 'Invalid Token' });

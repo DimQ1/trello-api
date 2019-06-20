@@ -1,4 +1,4 @@
-const winstonLogger = require('../logs/winstonLogger')();
+const logger = require('../logs/logger');
 
 module.exports = (request, response, next) => {
     const now = new Date();
@@ -7,6 +7,6 @@ module.exports = (request, response, next) => {
     const seconds = now.getSeconds();
     const data = `${hour}:${minutes}:${seconds} ${request.method} ${request.url} ${request.get('user-agent')}`;
     // eslint-disable-next-line no-console
-    winstonLogger.info(data);
+    logger.info(data);
     next();
 };

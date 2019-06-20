@@ -2,17 +2,17 @@ const fs = require('fs');
 const path = require('path');
 const cards = require('../assets/cards');
 
-module.exports = class CardService {
+class CardsRepository {
     constructor() {
         this._getNextId = () => {
-            const maxId = Math.max(...cards.map(o => o.id), 0);
+            const maxId = Math.max(...cards.map(card => card.id), 0);
             const nextId = maxId + 1;
 
             return nextId;
         };
-        this._sveCards = () => new Promise((resolve, reject) => {
+        this._sveCards = cardsForSaving => new Promise((resolve, reject) => {
             const savePath = path.join(__dirname, '..', 'assets', 'cards.json');
-            fs.writeFile(savePath, JSON.stringify(cards), (error) => {
+            fs.writeFile(savePath, JSON.stringify(cardsForSaving), (error) => {
                 if (error) reject(error);
                 resolve();
             });
@@ -23,8 +23,7 @@ module.exports = class CardService {
         card.id = this._getNextId();
         card.created = new Date();
         cards.push(card);
-        await this._sveCards()
-            .catch((error) => { throw error; });
+        await this._sveCards(cards);
 
         return card;
     }
@@ -41,7 +40,7 @@ module.exports = class CardService {
         });
 
         if (isUpdated) {
-            await this._sveCards();
+            await this._sveCards(cards);
         }
 
         return isUpdated;
@@ -59,19 +58,21 @@ module.exports = class CardService {
         });
 
         if (isDeleted) {
-            await this._sveCards();
+            await this._sveCards(cards);
         }
 
         return isDeleted;
     }
 
-    findAll() {
+    getAll() {
         return cards;
     }
 
     findOne(id) {
-        const card = cards.find(item => item.id === +id);
+        const card = cards.find(cardItem => cardItem.id === +id);
 
         return card;
     }
-};
+}
+
+module.exports = new CardsRepository();

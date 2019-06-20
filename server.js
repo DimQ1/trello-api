@@ -1,15 +1,14 @@
-/* eslint-disable no-console */
 const express = require('express');
 const helmet = require('helmet');
 const bodyParser = require('body-parser');
 const jwt = require('express-jwt');
 const errorHandler = require('./middlewares/errorHandler');
-const consoleLogger = require('./middlewares/consoleLogger');
-const winstonLogger = require('./logs/winstonLogger')();
+const middlewareLogger = require('./middlewares/middlewareLogger');
+const logger = require('./logs/logger');
 const { secret } = require('./config.json');
-const users = require('./users');
-const board = require('./board');
-const card = require('./card');
+const routes = require('./routes');
+
+const page404 = require('./middlewares/page404');
 
 const app = express();
 
@@ -17,21 +16,13 @@ app.use(helmet());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(jwt({ secret })
-    .unless({ path: ['/api/users/authenticate'] }));
-
-// custom console logger
-app.use(consoleLogger);
-
-// api routes
-app.use('/api/users', users.controller);
-app.use('/api/board', board.controller);
-app.use('/api/card', card.controller);
-
-// global error handler
+    .unless({ path: ['/login'] }));
+app.use(middlewareLogger);
+app.use('/', routes);
+app.use(page404);
 app.use(errorHandler);
 
-// start server
-const port = process.env.NODE_ENV === 'production' ? 80 : 3000;
+const port = process.env.PORT;
 app.listen(port, () => {
-    winstonLogger.info(`Server listening on port ${port}`);
+    logger.info(`Server listening on port ${port}`);
 });

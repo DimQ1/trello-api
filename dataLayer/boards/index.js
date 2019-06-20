@@ -1,9 +1,8 @@
 const fs = require('fs');
 const path = require('path');
 const boards = require('../assets/boards');
-const cards = require('../assets/cards');
 
-module.exports = class BoardService {
+class BoardRepository {
     constructor() {
         this._getNextId = () => {
             const maxId = Math.max(...boards.map(o => o.id), 0);
@@ -11,20 +10,24 @@ module.exports = class BoardService {
 
             return nextId;
         };
-        this._sveBoards = () => new Promise((resolve, reject) => {
+        this._saveBoards = boardsForSaving => new Promise((resolve, reject) => {
             const savePath = path.join(__dirname, '..', 'assets', 'boards.json');
-            fs.writeFile(savePath, JSON.stringify(boards), (error) => {
+            fs.writeFile(savePath, JSON.stringify(boardsForSaving), (error) => {
                 if (error) reject(error);
                 resolve();
             });
         });
     }
 
+    async saveBoards(boardsForSaving) {
+        this._saveBoards(boardsForSaving);
+    }
+
     async create(board) {
         board.id = this._getNextId();
         board.created = new Date();
         boards.push(board);
-        await this._sveBoards();
+        await this._saveBoards(boards);
 
         return board;
     }
@@ -41,7 +44,7 @@ module.exports = class BoardService {
         });
 
         if (isUpdated) {
-            await this._sveBoards();
+            await this._saveBoards(boards);
         }
 
         return isUpdated;
@@ -59,19 +62,21 @@ module.exports = class BoardService {
         });
 
         if (isUpdated) {
-            await this._sveBoards();
+            await this._saveBoards(boards);
         }
 
         return isUpdated;
     }
 
-    findAll() {
+    getall() {
         return boards;
     }
 
     findOne(id) {
-        const board = boards.find(item => item.id === +id);
+        const board = boards.find(boardItem => boardItem.id === +id);
 
         return board;
     }
-};
+}
+
+module.exports = new BoardRepository();
