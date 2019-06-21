@@ -2,9 +2,9 @@ const express = require('express');
 
 const router = express.Router();
 const expressJoiValidator = require('express-joi-validator');
-const { validators } = require('../businessLayer/cards');
-const role = require('../helpers/role');
-const authorize = require('../businessLayer/authorize');
+const { validators } = require('../services/cards');
+const { role } = require('../services/authorize');
+const { authorize } = require('../services/authorize');
 const { cardsController } = require('../controllers/index');
 
 router.post('/', expressJoiValidator(validators.create), authorize.userRoleCheck(role.admin), cardsController.create);

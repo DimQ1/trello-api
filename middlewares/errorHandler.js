@@ -1,5 +1,5 @@
 const expressJwt = require('express-jwt');
-const logger = require('../logs/logger');
+const logger = require('../tools/logger');
 
 module.exports = (err, req, res, next) => {
     logger.error(err.message);

@@ -3,26 +3,27 @@ const helmet = require('helmet');
 const bodyParser = require('body-parser');
 const jwt = require('express-jwt');
 const errorHandler = require('./middlewares/errorHandler');
-const middlewareLogger = require('./middlewares/middlewareLogger');
-const logger = require('./logs/logger');
+const eventLogger = require('./middlewares/eventLogger');
+const logger = require('./tools/logger');
 const { secret } = require('./config.json');
 const routes = require('./routes');
 
-const page404 = require('./middlewares/page404');
+const notFound = require('./middlewares/notFound');
 
 const app = express();
+const port = process.env.PORT || 3000;
 
 app.use(helmet());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(jwt({ secret })
     .unless({ path: ['/login'] }));
-app.use(middlewareLogger);
+app.use(eventLogger(logger));
 app.use('/', routes);
-app.use(page404);
+app.use(notFound);
 app.use(errorHandler);
 
-const port = process.env.PORT;
+
 app.listen(port, () => {
     logger.info(`Server listening on port ${port}`);
 });
