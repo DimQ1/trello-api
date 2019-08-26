@@ -19,7 +19,7 @@ class CardsController {
 
     findOne(req, res, next) {
         try {
-            res.json(services.findOne(req.params.cardId));
+            res.json(services.findById(req.params.cardId));
         } catch (error) {
             next(error);
         }

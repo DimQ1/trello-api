@@ -1,6 +1,5 @@
-const express = require('express');
-
-const router = express.Router();
+const router = require('express')
+    .Router();
 const expressJoiValidator = require('express-joi-validator');
 const { validators } = require('../services/cards');
 const { role } = require('../services/authorize');

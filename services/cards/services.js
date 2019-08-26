@@ -6,7 +6,7 @@ class CardService {
     }
 
     findByIdAndUpdate(card) {
-        return cards.findByIdAndUpdate(card);
+        return cards.Update(card);
     }
 
     deleteById(id) {
@@ -17,8 +17,8 @@ class CardService {
         return cards.getAll();
     }
 
-    findOne(id) {
-        return cards.findOne(id);
+    findById(id) {
+        return cards.findById(id);
     }
 }
 

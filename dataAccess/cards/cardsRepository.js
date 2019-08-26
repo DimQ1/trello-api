@@ -25,7 +25,7 @@ class CardsRepository {
         return card;
     }
 
-    async findByIdAndUpdate(card) {
+    async Update(card) {
         const isUpdated = !this._cards.every((itemBoard, index, arraycards) => {
             if (itemBoard.id === +card.id) {
                 arraycards.splice(index, 1, card);
@@ -59,12 +59,27 @@ class CardsRepository {
         return isDeleted;
     }
 
-    getAll() {
-        return this._cards;
+    async getAll() {
+        const allItems = await (new Promise((resolve, reject) => {
+            try {
+                resolve(this._cards);
+            } catch (error) {
+                reject(error);
+            }
+        }));
+
+        return allItems;
     }
 
-    findOne(id) {
-        const card = this._cards.find(cardItem => cardItem.id === +id);
+    async findById(id) {
+        const card = await (new Promise((resolve, reject) => {
+            try {
+                const foundCard = this._cards.find(cardItem => cardItem.id === +id);
+                resolve(foundCard);
+            } catch (error) {
+                reject(error);
+            }
+        }));
 
         return card;
     }

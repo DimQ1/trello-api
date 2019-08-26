@@ -1,9 +1,6 @@
 const expressJwt = require('express-jwt');
-const logger = require('../tools/logger');
 
 module.exports = (err, req, res, next) => {
-    logger.error(err.message);
-
     if (err instanceof expressJwt.UnauthorizedError) {
         // jwt authentication error
         return res.status(401)

@@ -1,14 +1,11 @@
 const users = require('../../dataAccess/users');
 
 class UserService {
-    constructor() {
-        this._getUserWithoutPassword = user => user ? {
-            id: user.id,
-            username: user.username,
-            firstName: user.firstName,
-            lastName: user.lastName,
-            Frole: user.role
-        } : null;
+    _getUserWithoutPassword(user) {
+        // eslint-disable-next-line no-unused-vars
+        const { password, ...userWithoutPassword } = user;
+
+        return userWithoutPassword;
     }
 
     getAll() {

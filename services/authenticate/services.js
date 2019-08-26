@@ -1,17 +1,16 @@
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
-const config = require('../../config.json');
+const config = require('../../config.js');
 const users = require('../../dataAccess/users');
 
 class Authenticate {
     constructor() {
-        this._getUserWithoutPassword = user => user ? {
-            id: user.id,
-            username: user.username,
-            firstName: user.firstName,
-            lastName: user.lastName,
-            Frole: user.role
-        } : null;
+        this._getUserWithoutPassword = (user) => {
+            // eslint-disable-next-line no-unused-vars
+            const { password, ...userWithoutPassword } = user;
+
+            return userWithoutPassword;
+        };
     }
 
     async authenticate({ username, password }) {
