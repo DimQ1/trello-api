@@ -1,0 +1,18 @@
+[
+    {
+        "id": 1,
+        "username": "admin",
+        "password": "$2a$10$JkRYXk6Wav5J3OIjnGt54.mUGKb.n4w3a6.s2YazxBZ3xeIPPs0Gy",
+        "firstName": "Admin",
+        "lastName": "User",
+        "role": "admin"
+    },
+    {
+        "id": 2,
+        "username": "user",
+        "password": "$2a$10$VDCr7W0sPyt6uteDS/Ckn.mSVF6j7b.EMlgNWuSj0BX9TaRY4Vjze",
+        "firstName": "Normal",
+        "lastName": "User",
+        "role": "user"
+    }
+]
